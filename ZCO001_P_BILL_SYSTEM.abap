@@ -1,4 +1,3 @@
-```ABAP
 *&---------------------------------------------------------------------*
 *& Report ZCO001_P_BILL_SYSTEM
 *&---------------------------------------------------------------------*
@@ -38,4 +37,3 @@ lcl_main_controller=>get_data( ).
 
 END-OF-SELECTION.
 lcl_main_controller=>end_of_selection( ).
-```
