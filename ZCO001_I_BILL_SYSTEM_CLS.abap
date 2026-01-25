@@ -1020,7 +1020,8 @@ CLASS lcl_main_controller IMPLEMENTATION.
           EXPORTING
             wait = abap_true.
 
-        SORT lt_ungrouped_bapi_alv BY tariff1 tariff2 description invoice_type pnl_group.
+        SORT lt_ungrouped_bapi_alv BY tariff1 tariff2 description invoice_type pnl_group. "for binary search
+        SORT mt_main by tariff1 tariff2 description invoice_type pnl_group. "for binary search
         LOOP AT lt_ungrouped_bapi_alv REFERENCE INTO DATA(lr_ungrouped_alv).
 *        LOOP AT mt_main REFERENCE INTO DATA(lr_main_last) WHERE document_no IS INITIAL ."OR ( TARIFF_ID_1 =   ).
           READ TABLE mt_main REFERENCE INTO DATA(lr_main_last) WITH KEY tariff1 = lr_ungrouped_alv->tariff1
@@ -1180,7 +1181,8 @@ CLASS lcl_main_controller IMPLEMENTATION.
             EXPORTING
               wait = abap_true.
 
-          SORT lt_ungrouped_bapi_alv BY tariff1 tariff2 description invoice_type pnl_group.
+          SORT lt_ungrouped_bapi_alv BY tariff1 tariff2 description invoice_type pnl_group. "for binary search
+          SORT mt_main by tariff1 tariff2 description invoice_type pnl_group. "for binary search
           LOOP AT lt_ungrouped_bapi_alv REFERENCE INTO DATA(lr_ungrouped_alv).
 *        LOOP AT mt_main REFERENCE INTO DATA(lr_main_last) WHERE document_no IS INITIAL ."OR ( TARIFF_ID_1 =   ).
             READ TABLE mt_main REFERENCE INTO DATA(lr_main_last) WITH KEY tariff1 = lr_ungrouped_alv->tariff1
