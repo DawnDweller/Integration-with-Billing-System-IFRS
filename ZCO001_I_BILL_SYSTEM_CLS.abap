@@ -1020,7 +1020,15 @@ CLASS lcl_main_controller IMPLEMENTATION.
           EXPORTING
             wait = abap_true.
 
-        LOOP AT mt_main REFERENCE INTO DATA(lr_main_last).
+        SORT lt_ungrouped_bapi_alv BY tariff1 tariff2 description invoice_type pnl_group.
+        LOOP AT lt_ungrouped_bapi_alv REFERENCE INTO DATA(lr_ungrouped_alv).
+*        LOOP AT mt_main REFERENCE INTO DATA(lr_main_last) WHERE document_no IS INITIAL ."OR ( TARIFF_ID_1 =   ).
+          READ TABLE mt_main REFERENCE INTO DATA(lr_main_last) WITH KEY tariff1 = lr_ungrouped_alv->tariff1
+                                                                        tariff2 = lr_ungrouped_alv->tariff2
+                                                                        description = lr_ungrouped_alv->description
+                                                                        invoice_type = lr_ungrouped_alv->invoice_type
+                                                                        pnl_group = lr_ungrouped_alv->pnl_group
+                                                                         BINARY SEARCH.
           lr_main_last->document_date    = lv_day_out.
           lr_main_last->document_no      = ls_obj_key+0(10).
           lr_main_last->re_document_no   = ''.
@@ -1172,7 +1180,15 @@ CLASS lcl_main_controller IMPLEMENTATION.
             EXPORTING
               wait = abap_true.
 
-          LOOP AT mt_main REFERENCE INTO DATA(lr_main_last) WHERE document_no = <lfs_bapi_alv>-document_no.
+          SORT lt_ungrouped_bapi_alv BY tariff1 tariff2 description invoice_type pnl_group.
+          LOOP AT lt_ungrouped_bapi_alv REFERENCE INTO DATA(lr_ungrouped_alv).
+*        LOOP AT mt_main REFERENCE INTO DATA(lr_main_last) WHERE document_no IS INITIAL ."OR ( TARIFF_ID_1 =   ).
+            READ TABLE mt_main REFERENCE INTO DATA(lr_main_last) WITH KEY tariff1 = lr_ungrouped_alv->tariff1
+                                                                          tariff2 = lr_ungrouped_alv->tariff2
+                                                                          description = lr_ungrouped_alv->description
+                                                                          invoice_type = lr_ungrouped_alv->invoice_type
+                                                                          pnl_group = lr_ungrouped_alv->pnl_group
+                                                                          BINARY SEARCH.
             lr_main_last->document_date  = lv_day_out.
             lr_main_last->re_document_no = ls_obj_key+0(10).
             lr_main_last->icon           = '@0A@'. "Red
